@@ -1,5 +1,8 @@
 # Operating-System
 
+# File system creation
+Making compatible file system, list of disk and creating file system will be discussed on another branch.
+
 
 ## NFS file distribution
 The project is about NFS file distribution such as mounting, unmounting, cascading mounting, load balance, redundancy. NFS consisted of 5 VM, 3 of them are clients and 2 of them are servers.
