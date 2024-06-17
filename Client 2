@@ -1,0 +1,8 @@
+# Step 1: Ensure NFS Utilities Are Installed on Client 2, nfs-common installed to support NFS mounting
+
+sudo apt update
+sudo apt install nfs-common
+
+# The original NFS server should have the directory /mnt/newdisk exported. /etc/exports on the original NFS server:
+
+/mnt/newdisk 192.168.42.101(rw,sync,no_subtree_check,no_root_squash)
