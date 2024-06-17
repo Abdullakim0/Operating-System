@@ -1,0 +1,32 @@
+# Install NFS Server
+
+sudo apt-get update
+sudo apt-get install nfs-kernel-server
+
+# Prepare the Export Directory
+
+sudo mkdir -p /mnt/specific
+sudo chown nobody:nogroup /mnt/specific
+sudo chmod 777 /mnt/specific
+
+# Configure NFS Exports
+
+sudo nano /etc/exports
+/mnt/specific 192.168.42.39(rw,sync,no_subtree_check)
+/mnt/specific 192.168.42.246(ro,sync,no_subtree_check)
+/mnt/general 192.168.42.0/24(rw,sync,no_subtree_check)
+/mnt/elite 192.168.42.39(rw,sync,no_subtree_check)
+/mnt/nfsloadbalance *(rw,sync,no_subtree_check)
+
+# Export the Shared Directory
+
+sudo exportfs -a
+
+# Start and Enable NFS Services
+
+sudo systemctl start nfs-server
+sudo systemctl enable nfs-server
+
+# Test NFS Share
+
+sudo mount <server-ip>:/mnt/specific /mnt
