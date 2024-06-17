@@ -1,0 +1,32 @@
+# To see the available files
+lsblk
+
+# allowed me to partition the giant sda file.
+
+sudo fdisk /dev/sda  # fdisk: This is a command-line utility used for disk partitioning
+
+Once inside fdisk, I used the following commands (press m for help):
+•	n: Create a new partition.
+•	p: Print partition table.
+•	d: Delete a partition.
+•	w: Write changes to disk and exit.
+•	q: Quit without saving changes.
+
+sudo mkfs.ext4 /dev/sda # command used to create new filesystem. 
+
+# Verification command:
+
+sudo blkid /dev/sdb1
+
+# Creating directory:
+
+sudo mkdir /mnt/newdisk
+
+# Mount the formatted partition to the mount point
+
+sudo mount /dev/sda /mnt/newdisk
+
+
+# Filesystem is overlay type, which is not supported to export NFS filesystem. Home directory is also overlay type. At least in my case.
+# /dev/sda is special device path. It represents the entire first SCSI (or SATA) disk drive in the system. 
+Device files in /dev are used by the operating system to communicate with hardware devices.
