@@ -1,0 +1,31 @@
+# Install NFS Server
+
+sudo apt-get update
+sudo apt-get install nfs-kernel-server
+
+# Prepare the Export Directory
+
+sudo mkdir -p /mnt/newdisk
+sudo chown nobody:nogroup /mnt/newdisk
+sudo chmod 777 /mnt/newdisk
+
+# Configure NFS Exports
+
+sudo nano /etc/exports
+
+/mnt/newdisk *(rw,sync,no_subtree_check,no_root_squash) # no_root_squash allows root users on the client to access files as root on the server. 
+
+# Export the Shared Directory
+
+sudo exportfs -a
+
+# Start and Enable NFS Services
+
+sudo systemctl start nfs-server
+sudo systemctl enable nfs-server
+
+# Test NFS Share
+
+sudo mount <server-ip>:/mnt/newdisk /mnt
+
+# sudo mount /dev/sda /mnt/nfs_sh mounts local file to compatible file if you make the file ext4 with the command sudo mkfs.ext4 /dev/sda
