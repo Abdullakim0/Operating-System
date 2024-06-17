@@ -1,0 +1,30 @@
+# Install NFS Client Utilities Client 1:
+
+sudo apt update
+sudo apt install nfs-common
+
+# Mount the NFS Share from the Original Server:
+
+sudo mkdir -p /mnt/nfsshare
+sudo mount 192.168.42.105:/mnt/newdisk /mnt/nfsshare
+
+# Install NFS Server Utilities:
+
+sudo apt install nfs-kernel-server
+
+# Re-export the Mounted Directory:
+Edit /etc/exports on Client 1:
+
+sudo nano /etc/exports
+/mnt/nfsshare 192.168.42.106(rw,sync,no_subtree_check,no_root_squash)
+
+Apply the export configuration:
+
+sudo exportfs -a
+
+# Start the NFS Server on Client 1:
+
+sudo systemctl start nfs-kernel-server
+sudo systemctl enable nfs-kernel-server
+
+# Always update the server whenever the new update or change is made.
