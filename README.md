@@ -4,6 +4,8 @@
 ## NFS file distribution
 The project is about NFS file distribution such as mounting, unmounting, cascading mounting, load balance, redundancy. NFS consisted of 5 VM, 3 of them are clients and 2 of them are servers.
 So to make the connections between servers and clients simple and available I disabled firwall from all the servers and clients using the command sudo ufw disable.
+
+To start with the client and server connection we simply test if the connection is stable and no connection failure between them by the command ping ip_address_client and ping ip_address_server.
 # Server 1 
 allows all the clients without restriction using (*) command in /etc/exports and access permission for all of them are equall with this command chmod -R 777 /mnt/nfsshare
 and chown  -R nobody:nogroup /mnt/nfsshare. /path/file ip_address(rw,sync,no_subtree_check) are used to export NFS file system, rw is for read and write, sync automatically updates every change and no
