@@ -1,8 +1,7 @@
 # Operating-System
 
 
-## NFS file distributionConfiguration and setting up the servers are discussed in each specific branch that is dedicated for each server and client
-
+## NFS file distribution
 The project is about NFS file distribution such as mounting, unmounting, cascading mounting, load balance, redundancy. NFS consisted of 5 VM, 3 of them are clients and 2 of them are servers.
 # Server 1 
 allows all the clients without restriction using (*) command in /etc/exports and access permission for all of them are equall with this command chmod -R 777 /mnt/nfsshare
@@ -49,3 +48,5 @@ Both servers are connected to haproxy using:
 
 Note: after each update or change we have to use sudo systemctl restart nfs-kernel-server or systemctl start haproxy or systemctl daemon-reload. exportfs -a, -ra is also used when we change or update
 /etc/exports directory
+
+## Configuration and setting up the servers are discussed in each specific branch that is dedicated for each server and client
