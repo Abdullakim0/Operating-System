@@ -1,0 +1,54 @@
+# HAProxy Configuration
+
+# HAProxy installation:
+
+sudo apt-get update
+sudo apt-get install haproxy
+
+# Edit the HAProxy configuration file to set up load balancing for NFS servers
+
+sudo nano /etc/haproxy/haproxy.cfg
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    maxconn 4096
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    log     global
+    mode    tcp
+    option  tcplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+
+frontend nfs_frontend
+    bind *:2049
+    mode tcp
+    default_backend nfs_backend
+
+backend nfs_backend
+    mode tcp
+    balance roundrobin
+    server nfs1 192.168.42.105:2049 check
+    server nfs2 192.168.42.106:2049 check
+
+# Restart Haproxy:
+
+sudo systemctl restart haproxy
+
+# On the NFS client machine, configure the /etc/fstab file to mount the NFS share via the HAProxy server’s IP address
+
+sudo nano /etx/fstab
+haproxy_ip:/mnt/nfsloadbalance /mnt/nfsserver1 nfs rw,proto=tcp,port=2049 0 0
+
+# Mount NFS share
+
+sudo mount -a
+
+# Verify the mount:
+
+ls /mnt/nfsserver1
