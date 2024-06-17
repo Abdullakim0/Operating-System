@@ -1,8 +1,47 @@
-# Step 1: Ensure NFS Utilities Are Installed on Client 2, nfs-common installed to support NFS mounting
+# Step 1: Ensure NFS Utilities Are Installed on Client 2, nfs-common installed to support NFS mounting. Ensure all the required configurations are set for 
+client1 and original server.
 
 sudo apt update
 sudo apt install nfs-common
 
-# The original NFS server should have the directory /mnt/newdisk exported. /etc/exports on the original NFS server:
+# Mount the Re-exported NFS Share from Client 1:
 
-/mnt/newdisk 192.168.42.101(rw,sync,no_subtree_check,no_root_squash)
+sudo mkdir -p /mnt/nfscascade
+sudo mount 192.168.42.106:/mnt/nfsshare /mnt/nfscascade
+
+# Verify the mount
+
+ls -l /mnt/nfscascade
+
+
+
+Example Workflow to Verify Cascading NFS
+On the Original NFS Server:
+
+cd /mnt/newdisk
+echo "File from NFS Server" > server_file.txt
+ls -l
+
+# On client 1:
+
+cd /mnt/nfsshare
+ls -l
+cat server_file.txt
+echo "File from Client 1" > client1_file.txt
+ls -l
+
+# On client 2
+
+cd /mnt/nfscascade
+ls -l
+cat server_file.txt
+cat client1_file.txt
+echo "File from Client 2" > client2_file.txt
+ls -l
+
+# Verify Directory Permissions
+
+sudo chown -R nobody:nogroup /mnt/nfsshare
+sudo chmod -R 777 /mnt/nfsshare
+
+# The command /etc/exports will always be there if we transport NFS file system
