@@ -28,3 +28,9 @@ sudo systemctl start nfs-kernel-server
 sudo systemctl enable nfs-kernel-server
 
 # Always update the server whenever the new update or change is made.
+
+# To create file:
+
+echo "permission" | sudo tee /mnt/newdisk/subject
+#read file:
+cat subject
