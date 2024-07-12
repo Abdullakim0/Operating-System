@@ -12,6 +12,17 @@ Once inside fdisk, I used the following commands (press m for help):
 •	w: Write changes to disk and exit.
 •	q: Quit without saving changes.
 
+There is also option to specify the size of the partition, in my case I created partitions
+to seperate my files from directories, when the directory is mounted files aren't visible
+from different partition, in order to double ensure the safety of my files. Also another
+method to handle partitioning in one directory is to create image inside one directory.
+
+umount -l /path/to/mounted/directory
+
+If the umount is giving error like target is busy, then it is necessary to use the
+command above -l (lazy). The -l option will detach the filesystem immediately and clean up
+all references to the filesystem as soon as it's no longer busy.
+
 sudo mkfs.ext4 /dev/sda # command used to create new filesystem. 
 
 # Verification command:
